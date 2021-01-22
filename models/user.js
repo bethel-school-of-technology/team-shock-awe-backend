@@ -1,5 +1,5 @@
-//could be admin or maybe our team member?
-//first name, last name, email, phone number, address, id number, department, wage, active/not active// 
+//THIS is our ADMIN USER PAGE
+//first name, last name, email,username, password
 
 //imports mongoose below
 var mongoose = require('mongoose');
@@ -37,7 +37,7 @@ var userSchema = new mongoose.Schema({
 },
     admin: {
         type: Boolean,
-        default: false
+        default: true
  }
 })
 
