@@ -12,7 +12,8 @@ var timeClockSchema = new mongoose.Schema({
 },
     clockOut: {
         type: Date,
-        required: false
+        required: false,
+        default: null
 },
     employeeId: {
         type: mongoose.ObjectId,
