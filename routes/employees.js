@@ -76,6 +76,7 @@ router.post('/clockin', async (req, res, next) => {
     loginId: req.body.loginId
   })
   console.log(new Date());  //< use for both clock in and clock out
+
   try {
     let newClockIn = new TimeClock({
       clockIn: new Date(),
@@ -126,12 +127,11 @@ router.post('/clockout', async (req, res) => {
   }
   catch (error) {
     res.json({ 
-      message: "Error creating clockout",
+      message: "Error creating clockout if clockout number does not match LoginId",
       status: 403,
     })
   }
-}
+  }
 )
+
 module.exports = router;
-
-
