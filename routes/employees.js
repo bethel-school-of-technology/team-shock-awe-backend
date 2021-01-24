@@ -95,12 +95,43 @@ router.post('/clockin', async (req, res, next) => {
     })
   }
 
-  res.send(currentEmployee);
+  
 
 })
 
+//CLOCK OUT ROUTE
+router.post('/clockout', async (req, res) => {
+  console.log(req.body); 
+  //find employee by Login Id and make sure its valid
+  //need to make sure the person exists so preserve this.
+  let currentEmployee = await Employee.findOne({  // add if statement if they are not the employee
+    loginId: req.body.loginId
+  })
+  // console.log(new Date());  //< use for both clock in and clock out
 
-
+  try {
+  console.log(currentEmployee._id)
+  let currentTimeClock = await TimeClock.findOne({
+    employeeId: currentEmployee._id, 
+    clockOut: null
+  }) 
+  currentTimeClock.clockOut = new Date ();
+   console.log(currentTimeClock) 
+   let Clock = await TimeClock.findByIdAndUpdate(currentTimeClock._id, currentTimeClock);
+   console.log (Clock)
+   res.json({
+    message: "Clockout created successfully",
+    status: 200,
+  })
+  }
+  catch (error) {
+    res.json({ 
+      message: "Error creating clockout",
+      status: 403,
+    })
+  }
+}
+)
 module.exports = router;
 
 
