@@ -5,29 +5,32 @@ const Employee = require('../models/employee');
 
 
 var tokenService = {
-    assignToken: function(user){
+    assignToken: function (user) {
         const token = jwt.sign(
             {
-            userName: user.userName,
-            _id:user._id
+                userName: user.userName,
+                _id: user._id
             },
             'mysupersecretkey',
-             {
+            {
                 expiresIn: '1h'
-             }
+            }
         )
         return token;
     },
-    verifyToken: function (token){
+    verifyToken: function (token) {
         try {
-        let decoded = jwt.verify(token, 'mysupersecretkey');
-        return User.findById(decoded._id);
-        } catch(err){
+            let decoded = jwt.verify(token, 'mysupersecretkey');
+            return User.findById(decoded._id);
+        } catch (err) {
             return null;
         }
     }
 }
+
+
 module.exports = tokenService;
+
 
 //Adding 2nd auth for employee login and authentication
 //We can ask Sujith more about this...
