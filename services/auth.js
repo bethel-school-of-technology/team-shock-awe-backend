@@ -20,6 +20,11 @@ var tokenService = {
     },
     verifyToken: function (token) {
         try {
+
+        let decoded = jwt.verify(token, 'mysupersecretkey');
+        return User.findById(decoded._id);
+        } catch(err){
+            console.log(err)
             let decoded = jwt.verify(token, 'mysupersecretkey');
             return User.findById(decoded._id);
         } catch (err) {

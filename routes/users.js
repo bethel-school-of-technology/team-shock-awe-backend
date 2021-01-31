@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var Employee = require('../models/employee');
 
 var tokenService = require('../services/auth');
 var passwordService = require('../services/password');
@@ -125,5 +126,73 @@ router.get('/profile', async (req, res, next) => {
     })
   }
 })
+
+
+//Update Route for Staff info changes
+
+router.put('/update/:id', async (req, res, next) => {
+  // console.log(req.headers);
+  let myToken = req.headers.authorization;
+  console.log(myToken);
+
+  if (myToken) {
+    let currentUser = await tokenService.verifyToken(myToken);
+    console.log(currentUser); 
+
+    if (currentUser) { 
+      let currentId = req.params.id;
+
+      // let updateEmployee = {
+      //   firstName: req.body.firstName,
+      //   lastName: req.body.lastName,
+      //   email: req.body.email,
+      //   loginId: req.body.loginId,
+      //   address: req.body.address,
+      //   zipCode: req.body.zipCode,
+      //   phoneNumber: req.body.phoneNumber,
+      //   position: req.body.position,
+      //   department: req.body.department,
+      //   wageRate: req.body.wageRate,
+      //   active: req.body.active,
+      //   admin: req.body.admin
+      // }
+      // console.log(updateEmployee)
+
+      let result = await Employee.findOneAndUpdate({_id:currentId}, {$set: {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        loginId: req.body.loginId,
+        address: req.body.address,
+        zipCode: req.body.zipCode,
+        phoneNumber: req.body.phoneNumber,
+        position: req.body.position,
+        department: req.body.department,
+        wageRate: req.body.wageRate,
+        active: req.body.active,
+        admin: req.body.admin
+        
+      } })
+      console.log(result)
+      //This is the CONTENT THAT WILL CHANGE MOSTLY FOR THIS TEMPLATE >>>BELOW
+      //So, your Route Logic Goes Here, below
+
+      res.json({
+        message: "User profile information updated successfully",
+        status: 200,
+        // user: currentUser
+      })
+      //This is the CONTENT THAT WILL CHANGE MOSTLY FOR THIS TEMPLATE >>ABOVE
+    }
+  }
+  else {
+    res.json({
+      message: "Token was invalid or expired",
+      status: 403,
+    });
+  }
+})
+
+
 
 module.exports = router;

@@ -10,66 +10,69 @@ const TimeClock = require('../models/timeclock');
 var tokenService = require('../services/auth');
 var passwordService = require('../services/password');
 
-//route to get user profile information -> /profile
-router.post('/register', async (req, res, next) => {
-  // console.log(req.headers);
-  let myToken = req.headers.authorization;
-  console.log(myToken);
+// //route to get user profile information -> /profile
+// router.post('/register', async (req, res, next) => {
+//   // console.log(req.headers);
+//   let myToken = req.headers.authorization;
+//   console.log(myToken);
 
-  if (myToken) {
-    let currentEmployee = await tokenService.verifyToken(myToken);
-    console.log(currentEmployee);
+//   if (myToken) {
+//     let currentEmployee = await tokenService.verifyToken(myToken);
+//     console.log(currentEmployee);
 
 
-    if (currentEmployee) {
-      //This is the CONTENT THAT WILL CHANGE MOSTLY FOR THIS TEMPLATE >>>BELOW
-      //So, your Route Logic Goes Here, below
-      try {
-        console.log(req.body);
-        let newEmployee = new Employee({
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          loginId: req.body.loginId,
-          address: req.body.address,
-          zipCode: req.body.zipCode,
-          email: req.body.email,
-          phoneNumber: req.body.phoneNumber,
-          position: req.body.position,
-          department: req.body.department,
-          wageRate: req.body.wageRate,
-        });
-        console.log(newEmployee)
-        let result = await newEmployee.save();
-        // console.log(result);
-        res.json({
-          message: "Employee created successfully",
-          status: 200,
-        })
-      }
-      catch (err) {
-        console.log(err);
-        res.json({
-          message: "Error creating user",
-          status: 403,
-        })
-      }
+//     if (currentEmployee) {
+//       //This is the CONTENT THAT WILL CHANGE MOSTLY FOR THIS TEMPLATE >>>BELOW
+//       //So, your Route Logic Goes Here, below
+//       try {
+//         console.log(req.body);
+//         let newEmployee = new Employee({
+//           firstName: req.body.firstName,
+//           lastName: req.body.lastName,
+//           loginId: req.body.loginId,
+//           address: req.body.address,
+//           zipCode: req.body.zipCode,
+//           email: req.body.email,
+//           phoneNumber: req.body.phoneNumber,
+//           position: req.body.position,
+//           department: req.body.department,
+//           wageRate: req.body.wageRate,
+//         });
+//         console.log(newEmployee)
+//         let result = await newEmployee.save();
+//         // console.log(result);
+//         res.json({
+//           message: "Employee created successfully",
+//           status: 200,
+//         })
+//       }
+//       catch (err) {
+//         console.log(err);
+//         res.json({
+//           message: "Error creating user",
+//           status: 403,
+//         })
+//       }
 
-      //This is the CONTENT THAT WILL CHANGE MOSTLY FOR THIS TEMPLATE >>ABOVE
-    }
-    else {
-      res.json({
-        message: "Token was invalid or expired",
-        status: 403,
-      })
-    }
-  }
-  else {
-    res.json({
-      message: "No Token Received",
-      status: 403,
-    })
-  }
-})
+//       //This is the CONTENT THAT WILL CHANGE MOSTLY FOR THIS TEMPLATE >>ABOVE
+//     }
+//     else {
+//       res.json({
+//         message: "Token was invalid or expired",
+//         status: 403,
+//       })
+//     }
+//   }
+//   else {
+//     res.json({
+//       message: "No Token Received",
+//       status: 403,
+//     })
+//   }
+// })
+
+
+
 
 router.post('/clockin', async (req, res, next) => {
   console.log(req.body);
@@ -153,5 +156,3 @@ router.post('/clockout', async (req, res) => {
 }
 })
 module.exports = router;
-
-
