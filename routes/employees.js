@@ -1,8 +1,11 @@
 //This is a template route, you can use this almost always to do any sort of verification.
 var express = require('express');
 var router = express.Router();
+var cookieParser = require('cookie-parser');
+
 var Employee = require('../models/employee');
 const TimeClock = require('../models/timeclock');
+
 
 var tokenService = require('../services/auth');
 var passwordService = require('../services/password');
@@ -68,6 +71,9 @@ var passwordService = require('../services/password');
 //   }
 // })
 
+
+
+
 router.post('/clockin', async (req, res, next) => {
   console.log(req.body);
   //find employee by Login Id and make sure its valid
@@ -76,7 +82,7 @@ router.post('/clockin', async (req, res, next) => {
     loginId: req.body.loginId
   })
   if (currentEmployee) {
-   //< use for both clock in and clock out
+    console.log(new Date());  //< use for both clock in and clock out
     try {
       let currentTimeClock = await TimeClock.findOne({
         employeeId: currentEmployee._id,
@@ -88,6 +94,7 @@ router.post('/clockin', async (req, res, next) => {
           status: 403,
         })
       } else {
+
         let newClockIn = new TimeClock({
           clockIn: new Date(),
           employeeId: currentEmployee._id
@@ -114,7 +121,6 @@ router.post('/clockin', async (req, res, next) => {
   }
 })
 
-
 //CLOCK OUT ROUTE
 router.post('/clockout', async (req, res) => {
   console.log(req.body);
@@ -126,8 +132,6 @@ router.post('/clockout', async (req, res) => {
   // console.log(new Date());  //< use for both clock in and clock out
   if (currentEmployee) {
     console.log(new Date());
-
-
   try {
     console.log(currentEmployee._id)
     let currentTimeClock = await TimeClock.findOne({
@@ -135,8 +139,6 @@ router.post('/clockout', async (req, res) => {
       clockOut: null
     })
     currentTimeClock.clockOut = new Date();
-
-
     console.log(currentTimeClock)
     let Clock = await TimeClock.findByIdAndUpdate(currentTimeClock._id, currentTimeClock);
     console.log(Clock)

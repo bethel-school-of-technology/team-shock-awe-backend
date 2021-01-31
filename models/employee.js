@@ -13,7 +13,6 @@ var employeeSchema = new mongoose.Schema({
         type: Number,
         required: true,
         unique: true
-
     },
     address: {
         type: String,
