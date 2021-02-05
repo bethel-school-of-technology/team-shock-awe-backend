@@ -20,7 +20,7 @@ app.use(cors());
 
 
 //Mongo Connection//
-var connectionString = "mongodb://127.0.0.1/express-api";
+var connectionString = "mongodb+srv://dbuser:Password1!@cluster0.4t6zy.mongodb.net/KBtimeclock?retryWrites=true&w=majority";
 mongoose.connect(connectionString, {useNewUrlParser:true,useUnifiedTopology: true}, 
     function(){
         console.log("database is connected");

@@ -142,22 +142,7 @@ router.put('/update/:id', async (req, res, next) => {
     if (currentUser) { 
       let currentId = req.params.id;
 
-      // let updateEmployee = {
-      //   firstName: req.body.firstName,
-      //   lastName: req.body.lastName,
-      //   email: req.body.email,
-      //   loginId: req.body.loginId,
-      //   address: req.body.address,
-      //   zipCode: req.body.zipCode,
-      //   phoneNumber: req.body.phoneNumber,
-      //   position: req.body.position,
-      //   department: req.body.department,
-      //   wageRate: req.body.wageRate,
-      //   active: req.body.active,
-      //   admin: req.body.admin
-      // }
-      // console.log(updateEmployee)
-
+     
       let result = await Employee.findOneAndUpdate({_id:currentId}, {$set: {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
