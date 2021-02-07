@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/user');
+var User = require('../models/user');     //This route is called Admin model instead of User-- may need changed in the future for connection
 var Employee = require('../models/employee');
 
 var tokenService = require('../services/auth');
@@ -16,7 +16,7 @@ var passwordService = require('../services/password');
 router.post('/register', async (req, res, next) => {
   try {
     console.log(req.body);
-    let newUser = new User({
+    let newUser = new User({              //This route is called Admin model instead of User-- may need changed in the future for connection
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
@@ -45,11 +45,11 @@ router.post('/register', async (req, res, next) => {
 //route for login -> /login
 router.post('/login', async (req, res, next) => {
   // console.log(req.body);
-  User.findOne({ userName: req.body.userName }, function (err, user) {
+  User.findOne({ userName: req.body.userName }, function (err, user) {   //This route is called Admin model instead of User-- may need changed in the future for connection
     if (err) {
       console.log(err)
       res.json({
-        message: "Error Accessing Database",
+        message: "Error Accessing Database",   //error to show if the database is not connecting to the login 
         status: 500,
       })
     }
@@ -135,12 +135,12 @@ router.put('/update/:id', async (req, res, next) => {
   let myToken = req.headers.authorization;
   console.log(myToken);
 
-  if (myToken) {
-    let currentUser = await tokenService.verifyToken(myToken);
+  if (myToken) {   //if my My Token is authorized for the current user then allow currentuser to login using the new verified Token. 
+    let currentUser = await tokenService.verifyToken(myToken);  
     console.log(currentUser); 
 
     if (currentUser) { 
-      let currentId = req.params.id;
+      let currentId = req.params.id;   //if the current user is verified then let the current Id user result in an updated Json body 'form"
 
      
       let result = await Employee.findOneAndUpdate({_id:currentId}, {$set: {
@@ -149,6 +149,7 @@ router.put('/update/:id', async (req, res, next) => {
         email: req.body.email,
         loginId: req.body.loginId,
         address: req.body.address,
+        state: req.body.state,
         zipCode: req.body.zipCode,
         phoneNumber: req.body.phoneNumber,
         position: req.body.position,

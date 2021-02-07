@@ -42,7 +42,7 @@ var userSchema = new mongoose.Schema({
 })
 
 //Compile the Schema into a model by calling it
-var User = mongoose.model('user', userSchema);
+var User = mongoose.model('user', userSchema);  //This route is called Admin model instead of User-- may need changed in the future for connection
 
-module.exports = User
+module.exports = User                            //This route is called Admin model instead of User-- may need changed in the future for connection
 //when you import the file you have access to the user model object
