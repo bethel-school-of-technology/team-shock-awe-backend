@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/api/users', usersRouter);
+app.use('/api/users', usersRouter);                 //This route is called Admin model instead of User-- may need changed in the future for connection
 app.use('/api/employees', employeesRouter);
 
 

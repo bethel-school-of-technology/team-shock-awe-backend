@@ -31,6 +31,7 @@ router.post('/register', async (req, res, next) => {
           lastName: req.body.lastName,
           loginId: req.body.loginId,
           address: req.body.address,
+          state: req.body.state,
           zipCode: req.body.zipCode,
           email: req.body.email,
           phoneNumber: req.body.phoneNumber,
@@ -84,8 +85,8 @@ router.post('/clockin', async (req, res, next) => {
   if (currentEmployee) {
     console.log(new Date());  //< use for both clock in and clock out
     try {
-      let currentTimeClock = await TimeClock.findOne({
-        employeeId: currentEmployee._id,
+      let currentTimeClock = await TimeClock.findOne({  //is currentTimeClock null? iF currentTimeClock is not null, then send a message you are already clocked in
+        employeeId: currentEmployee._id,                 
         clockOut: null
       })
       if (currentTimeClock) {
@@ -95,7 +96,7 @@ router.post('/clockin', async (req, res, next) => {
         })
       } else {
 
-        let newClockIn = new TimeClock({
+        let newClockIn = new TimeClock({   //if it is null then it will clock in the employee witht the new timestamp/ new Date function
           clockIn: new Date(),
           employeeId: currentEmployee._id
         })
@@ -126,21 +127,21 @@ router.post('/clockout', async (req, res) => {
   console.log(req.body);
   //find employee by Login Id and make sure its valid
   //need to make sure the person exists so preserve this.
-  let currentEmployee = await Employee.findOne({  // add if statement if they are not the employee
+  let currentEmployee = await Employee.findOne({  // we are assinging a variable of currentEmployee to find one employee 1 employee by their loginId
     loginId: req.body.loginId
   })
-  // console.log(new Date());  //< use for both clock in and clock out
-  if (currentEmployee) {
+  // console.log(new Date()); 
+  if (currentEmployee) {  //if the variable of current Employee is found, then first we will console.log ourselves to see the timestamp
     console.log(new Date());
   try {
     console.log(currentEmployee._id)
-    let currentTimeClock = await TimeClock.findOne({
+    let currentTimeClock = await TimeClock.findOne({ //then we will try to assign the variable CurrentTimeClock to find the employee by Id and a clockout of null
       employeeId: currentEmployee._id,
       clockOut: null
     })
-    currentTimeClock.clockOut = new Date();
+    currentTimeClock.clockOut = new Date();  //when currentTimeClock  accesses the clockout property it assigns a new Date
     console.log(currentTimeClock)
-    let Clock = await TimeClock.findByIdAndUpdate(currentTimeClock._id, currentTimeClock);
+    let Clock = await TimeClock.findByIdAndUpdate(currentTimeClock._id, currentTimeClock);  // Then we will assign the clock variable to find an employee by Id
     console.log(Clock)
     res.json({
       message: "Clockout created successfully",
