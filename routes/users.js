@@ -95,7 +95,9 @@ router.get('/profile', async (req, res, next) => {
   if (myToken) {
     let currentUser = await tokenService.verifyToken(myToken);
     console.log(currentUser);
+    let employeeList = await Employee.find({
 
+    })
 
     if (currentUser) {
       let responseUser = {
@@ -104,7 +106,8 @@ router.get('/profile', async (req, res, next) => {
         email: currentUser.email,
         userName: currentUser.userName,
         deleted: currentUser.deleted,
-        admin: currentUser.admin
+        admin: currentUser.admin,
+        employeeList
       }
       res.json({
         message: "User profile information loaded successfully",
