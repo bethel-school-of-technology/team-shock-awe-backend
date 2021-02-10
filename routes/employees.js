@@ -105,7 +105,7 @@ router.post('/clockin', async (req, res, next) => {
         res.json({
           message: "Clockin created successfully",
           status: 200,
-          time: currentTimeClock.clockIn,
+          time: newClockIn.clockIn,
         })
       }
     }
