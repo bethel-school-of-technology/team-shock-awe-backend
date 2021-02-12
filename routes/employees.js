@@ -106,6 +106,8 @@ router.post('/clockin', async (req, res, next) => {
           message: "Clockin created successfully",
           status: 200,
           time: newClockIn.clockIn,
+          firstName: currentEmployee.firstName,
+          lastName: currentEmployee.lastName
         })
       }
     }
@@ -144,10 +146,13 @@ router.post('/clockout', async (req, res) => {
     console.log(currentTimeClock)
     let Clock = await TimeClock.findByIdAndUpdate(currentTimeClock._id, currentTimeClock);  // Then we will assign the clock variable to find an employee by Id
     console.log(Clock)
+let timeWorked = (currentTimeClock.clockOut - currentTimeClock.clockIn)
+
     res.json({
       message: "Clockout created successfully",
       status: 200,
       time: currentTimeClock.clockOut,
+      timeWorked
     })
   }
   catch (error) {
@@ -158,4 +163,14 @@ router.post('/clockout', async (req, res) => {
   }
 }
 })
+
+router.get("/getallemployees", async (req, res) => {
+  let employeeList = await Employee.find({
+  }).select({ "firstName": 1, "lastName": 1, "department": 1})
+  res.json ({
+    message: "found employee list",
+    status: 200,
+    employeeList
+  })
+} )
 module.exports = router;
