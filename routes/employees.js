@@ -30,7 +30,7 @@ router.post('/register', async (req, res, next) => {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           loginId: req.body.loginId,
-          address: req.body.address,
+          streetAddress: req.body.streetAddress,
           state: req.body.state,
           zipCode: req.body.zipCode,
           email: req.body.email,
@@ -173,4 +173,33 @@ router.get("/getallemployees", async (req, res) => {
     employeeList
   })
 } )
+
+// router.get("/getoneemployee/:id", async (req, res) => {
+//   let employeeOne = await Employee.findById({
+//   }).select({ "_id": 1, "firstName": 1, "lastName": 1, "department": 1})
+//   res.json ({
+//     message: "found employee list",
+//     status: 200,
+//     employeeList
+//   })
+// } )
+
+router.get("/getoneemployee/:id", async (req, res, next) => {
+  Employee.findById(req.params.id).then(employee => {
+    try{
+      if (employee) {
+      res.status(200).json(employee);
+    } else {
+      res.status(404).json({ message: "Employee not found!" });
+    }
+    }
+    catch (error) {
+      res.json({
+        message: "Error creating clockout",
+        status: 403,
+      })
+    }
+  });
+});
+
 module.exports = router;

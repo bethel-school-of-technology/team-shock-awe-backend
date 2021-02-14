@@ -68,14 +68,14 @@ router.post('/login', async (req, res, next) => {
       else {
         console.log('Wrong Password');
         res.json({
-          message: "Wrong Password",
+          message: "INCORRECT PASSWORD",
           status: 403,
         })
       }
     }
     else {
       res.json({
-        message: "Wrong Username",
+        message: "THIS USERNAME DOESN'T EXIST",
         status: 403,
       })
     }
@@ -151,7 +151,7 @@ router.put('/update/:id', async (req, res, next) => {
         lastName: req.body.lastName,
         email: req.body.email,
         loginId: req.body.loginId,
-        address: req.body.address,
+        streetAddress: req.body.streetAddress,
         state: req.body.state,
         zipCode: req.body.zipCode,
         phoneNumber: req.body.phoneNumber,
