@@ -60,7 +60,7 @@ router.post('/login', async (req, res, next) => {
         //Create token
         let token = tokenService.assignToken(user);
         res.json({
-          message: "Login was successful",
+          // message: "Login was successful",
           status: 200,
           token
         })

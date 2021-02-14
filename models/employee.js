@@ -10,11 +10,11 @@ var employeeSchema = new mongoose.Schema({
         required: true
     },
     loginId: {
-        type: Number,
+        type: String,
         required: true,
         unique: true
     },
-    address: {
+    streetAddress: {
         type: String,
         required: true
     },
@@ -32,7 +32,7 @@ var employeeSchema = new mongoose.Schema({
         unique: true
     },
     phoneNumber: {
-        type: Number,
+        type: String,
         required: true
     },
     position: {
@@ -44,7 +44,7 @@ var employeeSchema = new mongoose.Schema({
         required: true
     },
     wageRate: {
-        type: Number,
+        type: String,
         required: true
     },
     active: {
