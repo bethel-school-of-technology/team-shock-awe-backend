@@ -103,7 +103,7 @@ router.post('/clockin', async (req, res, next) => {
         let result = await newClockIn.save();
         console.log(result);
         res.json({
-          message: "Clockin created successfully",
+          message: "Welcome! Have a great day!",
           status: 200,
           time: newClockIn.clockIn,
           firstName: currentEmployee.firstName,
@@ -149,7 +149,7 @@ router.post('/clockout', async (req, res) => {
 let timeWorked = (currentTimeClock.clockOut - currentTimeClock.clockIn)
 
     res.json({
-      message: "Clockout created successfully",
+      message: "Great job! Rest well!",
       status: 200,
       time: currentTimeClock.clockOut,
       timeWorked
