@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');     //This route is called Admin model instead of User-- may need changed in the future for connection
 var Employee = require('../models/employee');
+var mongoose = require('mongoose');
 
 var tokenService = require('../services/auth');
 var passwordService = require('../services/password');
@@ -139,29 +140,32 @@ router.put('/update/:id', async (req, res, next) => {
   console.log(myToken);
 
   if (myToken) {   //if my My Token is authorized for the current user then allow currentuser to login using the new verified Token. 
-    let currentUser = await tokenService.verifyToken(myToken);  
-    console.log(currentUser); 
+    let currentUser = await tokenService.verifyToken(myToken);
+    console.log(currentUser);
 
-    if (currentUser) { 
-      let currentId = req.params.id;   //if the current user is verified then let the current Id user result in an updated Json body 'form"
+    if (currentUser) {
+      console.log(req.params.id);
+      let currentId = mongoose.Types.ObjectId(req.params.id);   //if the current user is verified then let the current Id user result in an updated Json body 'form"
 
-     
-      let result = await Employee.findOneAndUpdate({_id:currentId}, {$set: {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        loginId: req.body.loginId,
-        streetAddress: req.body.streetAddress,
-        state: req.body.state,
-        zipCode: req.body.zipCode,
-        phoneNumber: req.body.phoneNumber,
-        position: req.body.position,
-        department: req.body.department,
-        wageRate: req.body.wageRate,
-        active: req.body.active,
-        admin: req.body.admin
-        
-      } })
+
+      let result = await Employee.findOneAndUpdate({ _id: currentId }, {
+        $set: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          email: req.body.email,
+          loginId: req.body.loginId,
+          streetAddress: req.body.streetAddress,
+          state: req.body.state,
+          zipCode: req.body.zipCode,
+          phoneNumber: req.body.phoneNumber,
+          position: req.body.position,
+          department: req.body.department,
+          wageRate: req.body.wageRate,
+          active: req.body.active,
+          admin: req.body.admin
+
+        }
+      })
       console.log(result)
       //This is the CONTENT THAT WILL CHANGE MOSTLY FOR THIS TEMPLATE >>>BELOW
       //So, your Route Logic Goes Here, below
@@ -179,6 +183,39 @@ router.put('/update/:id', async (req, res, next) => {
       message: "Token was invalid or expired",
       status: 403,
     });
+  }
+})
+
+
+//to check and see if the admin is still logged in and use their to
+router.get('/checklogin', async (req, res, next) => {
+  // console.log(req.headers);
+  let myToken = req.headers.authorization;
+  console.log(myToken);
+
+  if (myToken) {
+    let currentUser = await tokenService.verifyToken(myToken);
+    console.log(currentUser)
+
+    if (currentUser) {
+      res.json({
+        message: "USER STILL LOGGED IN",
+        status: 200
+      })
+      //This is the CONTENT THAT WILL CHANGE MOSTLY FOR THIS TEMPLATE >>ABOVE
+    }
+    else {
+      res.json({
+        message: "Token was invalid or expired",
+        status: 403,
+      })
+    }
+  }
+  else {
+    res.json({
+      message: "No Token Received",
+      status: 403,
+    })
   }
 })
 
