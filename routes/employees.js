@@ -91,7 +91,7 @@ router.post('/clockin', async (req, res, next) => {
       })
       if (currentTimeClock) {
         res.json({
-          message: "You are already clocked in",
+          message: "YOU ARE ALREADY CLOCKED IN",
           status: 403,
         })
       } else {
@@ -103,7 +103,7 @@ router.post('/clockin', async (req, res, next) => {
         let result = await newClockIn.save();
         console.log(result);
         res.json({
-          message: "Welcome! Have a great day!",
+          message: "WELCOME! HAVE A GREAT DAY!",
           status: 200,
           time: newClockIn.clockIn,
           firstName: currentEmployee.firstName,
@@ -113,7 +113,7 @@ router.post('/clockin', async (req, res, next) => {
     }
     catch (error) {
       res.json({
-        message: "Error creating clockin",
+        message: "YOU ARE NOT CLOCKED IN",
         status: 403,
       })
     }
@@ -149,7 +149,7 @@ router.post('/clockout', async (req, res) => {
 let timeWorked = (currentTimeClock.clockOut - currentTimeClock.clockIn)
 
     res.json({
-      message: "Great job! Rest well!",
+      message: "GREAT JOB!  REST WELL!",
       status: 200,
       time: currentTimeClock.clockOut,
       timeWorked
@@ -157,7 +157,7 @@ let timeWorked = (currentTimeClock.clockOut - currentTimeClock.clockIn)
   }
   catch (error) {
     res.json({
-      message: "Error creating clockout",
+      message: "YOU ARE NOT CLOCKED IN",
       status: 403,
     })
   }
