@@ -119,7 +119,7 @@ router.post('/clockin', async (req, res, next) => {
     }
   } else {
     res.json({
-      message: "Did not find user",
+      message: "INCORRECT EMPLOYEE LOGIN",
       status: 403,
     })
   }
@@ -149,7 +149,7 @@ router.post('/clockout', async (req, res) => {
 let timeWorked = (currentTimeClock.clockOut - currentTimeClock.clockIn)
 
     res.json({
-      message: "GREAT JOB!  REST WELL!",
+      message: "GREAT JOB TODAY! REST WELL!",
       status: 200,
       time: currentTimeClock.clockOut,
       timeWorked
@@ -157,7 +157,7 @@ let timeWorked = (currentTimeClock.clockOut - currentTimeClock.clockIn)
   }
   catch (error) {
     res.json({
-      message: "YOU ARE NOT CLOCKED IN",
+      message: "YOU HAVE NOT CLOCKED IN",
       status: 403,
     })
   }
@@ -190,12 +190,12 @@ router.get("/getoneemployee/:id", async (req, res, next) => {
       if (employee) {
       res.status(200).json(employee);
     } else {
-      res.status(404).json({ message: "Employee not found!" });
+      res.status(404).json({ message: "EMPLOYEE NOT FOUND" });
     }
     }
     catch (error) {
       res.json({
-        message: "Error creating clockout",
+        message: "EMPLOYEE NOT UPDATED",
         status: 403,
       })
     }
