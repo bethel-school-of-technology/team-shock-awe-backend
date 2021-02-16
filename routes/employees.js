@@ -52,6 +52,7 @@ router.post('/register', async (req, res, next) => {
         res.json({
           message: "Error creating user",
           status: 403,
+          err
         })
       }
 
