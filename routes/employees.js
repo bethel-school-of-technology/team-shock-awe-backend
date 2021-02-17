@@ -104,8 +104,8 @@ router.post('/clockin', async (req, res, next) => {
         let result = await newClockIn.save();
         console.log(result);
         res.json({
-          message: "WELCOME! HAVE A GREAT DAY!",
-          status: 200,
+          message: "$$ WHERE DA MONEY RESIDES $$",
+         status: 200,
           time: newClockIn.clockIn,
           firstName: currentEmployee.firstName,
           lastName: currentEmployee.lastName
